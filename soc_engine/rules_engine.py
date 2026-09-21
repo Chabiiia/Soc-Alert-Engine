@@ -3,7 +3,7 @@ from collections import defaultdict
 def detect_brute_force(parsed_logs: list[dict],threshold: int=3,window_seconds: int=60)->list[dict]:
     failed_by_ip = defaultdict(list)
     for log in parsed_logs:
-        if log["event_type"] == "failed_password"git commit -m "feat: add rules engine":
+        if log["event_type"] == "failed_password":
             if log["ip"] and log["timestamp"]:
                 failed_by_ip[log["ip"]].append(log["timestamp"])
 
