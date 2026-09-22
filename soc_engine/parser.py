@@ -28,6 +28,10 @@ def parse_line(line: str) -> dict:
     pid_match = re.search(r"\[(\d+)\]",line)
     pid = pid_match.group(1) if pid_match else None
 
+    username_match = re.search(r"(?:for\s+(?:invalid user\s+)?|user\s+)(\S+)\s+from", line)
+    username = username_match.group(1) if username_match else None
+
+
     return {
         "ip":ip,
         "event_type":event_type,

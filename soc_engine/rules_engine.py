@@ -30,3 +30,24 @@ def detect_brute_force(parsed_logs: list[dict],threshold: int=3,window_seconds: 
                     break
 
     return results
+
+def detect_user_enumeration(parsed_logs: list[dict],distinct_threshold:int= 5) -> list[dict]:
+    user_by_ip = defaultdict(set)
+
+    for log in parsed_logs:
+        ip = log.get("ip")
+        username = log.get("username")
+
+        if ip and username:
+            user_by_ip[ip].add(username)
+
+    results=[]
+
+    for ip,usernames in user_by_ip.items():
+        if len(usernames) >= distinct_threshold:
+            results.append({
+                "ip":ip,
+                "distinct_user_count":len(usernames),
+                "usernames":list(usernames)
+            })
+    return results
